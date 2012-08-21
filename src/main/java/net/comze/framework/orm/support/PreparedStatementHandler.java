@@ -14,22 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.comze.framework.orm.bind;
+package net.comze.framework.orm.support;
 
-import java.io.InputStream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
+import net.comze.framework.orm.util.DataAccessException;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
- * @since 3.0.0
- * @version AsciiStreamWrapper.java 3.2.0 Aug 16, 2012 3:21:49 PM
+ * @since 3.2.0
+ * @version PreparedStatementHandler.java 3.2.0 Aug 16, 2012 11:10:47 AM
  */
-public class AsciiStreamWrapper implements ColumnWrapper<InputStream> {
+public interface PreparedStatementHandler<T> {
 
-	@Override
-	public InputStream handle(ResultSet resultSet, int index) throws SQLException {
-		return resultSet.getAsciiStream(index);
-	}
+	public T doAfterPrepared(PreparedStatement statement) throws DataAccessException;
 
 }

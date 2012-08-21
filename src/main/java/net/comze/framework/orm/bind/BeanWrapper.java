@@ -36,7 +36,7 @@ import net.comze.framework.orm.util.StringUtils;
  * @since 3.0.0
  * @version BeanWrapper.java 3.0.0 Jan 9, 2011 9:03:38 PM
  */
-public class BeanWrapper<T> extends RowWrapper<T> {
+public class BeanWrapper<T> implements RowWrapper<T> {
 
 	private Class<T> requiredType;
 
@@ -45,7 +45,7 @@ public class BeanWrapper<T> extends RowWrapper<T> {
 	}
 
 	@Override
-	public T handleRow(ResultSet resultSet) throws SQLException {
+	public T handle(ResultSet resultSet) throws SQLException {
 		Map<String, BeanProperty> beanPropertyMap = BeanUtils.getBeanPropertyMap(requiredType);
 		T resultRow = BeanUtils.newInstance(requiredType);
 		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -57,20 +57,20 @@ public class BeanWrapper<T> extends RowWrapper<T> {
 				throw new SQLException("Get column name fail: the column name is empty in statement '" + resultSet.getStatement().toString() + "'");
 			}
 			BeanProperty beanProperty = beanPropertyMap.get(columnName);
-			if(ObjectUtils.isNull(beanProperty)) {
-				continue ;
+			if (ObjectUtils.isNull(beanProperty)) {
+				continue;
 			}
 			PropertyEditor propertyEditor = beanProperty.getPropertyEditor();
 			Class<?> clumnType = Object.class;
-			if(ObjectUtils.isNull(propertyEditor) && ObjectUtils.isNotNull(beanProperty.getType())) {
+			if (ObjectUtils.isNull(propertyEditor) && ObjectUtils.isNotNull(beanProperty.getType())) {
 				clumnType = beanProperty.getType();
 			}
-			Object value = ColumnWrapperFactory.wrapper(clumnType).handleColumn(resultSet, i);
+			Object value = ColumnWrapperFactory.wrapper(clumnType).handle(resultSet, i);
 			Method writeMethod = beanProperty.getWriteMethod();
-			if(ObjectUtils.isNull(writeMethod)) {
+			if (ObjectUtils.isNull(writeMethod)) {
 				throw new BeanAccessException("Write method not found: '" + requiredType.getName() + ", " + beanProperty.getName() + "'");
 			}
-			
+
 			setObject(resultRow, writeMethod, propertyEditor, value);
 		}
 

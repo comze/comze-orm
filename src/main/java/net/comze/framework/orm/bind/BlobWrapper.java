@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BlobWrapper.java 3.0.0 Jan 12, 2011 5:08:15 PM
+ * @version BlobWrapper.java 3.2.0 Aug 16, 2012 3:24:23 PM
  */
-public class BlobWrapper extends ColumnWrapper<Blob> {
+public class BlobWrapper implements ColumnWrapper<Blob> {
 
 	@Override
-	public Blob handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Blob handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getBlob(index);
 	}
 

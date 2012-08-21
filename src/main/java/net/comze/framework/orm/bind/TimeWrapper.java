@@ -23,12 +23,12 @@ import java.sql.Time;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version TimeWrapper.java 3.0.0 Jan 12, 2011 4:58:07 PM
+ * @version TimeWrapper.java 3.2.0 Aug 16, 2012 3:31:34 PM
  */
-public class TimeWrapper extends ColumnWrapper<Time> {
+public class TimeWrapper implements ColumnWrapper<Time> {
 
 	@Override
-	public Time handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Time handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getTime(index);
 	}
 

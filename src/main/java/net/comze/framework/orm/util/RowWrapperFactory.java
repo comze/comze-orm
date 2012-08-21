@@ -25,7 +25,9 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.NClob;
 import java.sql.Ref;
+import java.sql.ResultSet;
 import java.sql.RowId;
+import java.sql.SQLException;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -37,8 +39,10 @@ import net.comze.framework.orm.bind.BeanWrapper;
 import net.comze.framework.orm.bind.BigDecimalWrapper;
 import net.comze.framework.orm.bind.BlobWrapper;
 import net.comze.framework.orm.bind.BooleanWrapper;
+import net.comze.framework.orm.bind.ByteWrapper;
 import net.comze.framework.orm.bind.BytesWrapper;
 import net.comze.framework.orm.bind.ClobWrapper;
+import net.comze.framework.orm.bind.ColumnWrapper;
 import net.comze.framework.orm.bind.DateWrapper;
 import net.comze.framework.orm.bind.DoubleWrapper;
 import net.comze.framework.orm.bind.FloatWrapper;
@@ -58,11 +62,10 @@ import net.comze.framework.orm.bind.TimeWrapper;
 import net.comze.framework.orm.bind.TimestampWrapper;
 import net.comze.framework.orm.bind.URLWrapper;
 
-
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version RowWrapperFactory.java 3.0.0 Jan 12, 2011 2:27:49 PM
+ * @version RowWrapperFactory.java 3.2.0 Aug 17, 2012 11:47:09 AM
  */
 public abstract class RowWrapperFactory {
 
@@ -70,86 +73,101 @@ public abstract class RowWrapperFactory {
 
 	@SuppressWarnings("unchecked")
 	public static <T> RowWrapper<T> wrapper(Class<T> requiredType) {
+		class RowWrapperProxy<W> implements RowWrapper<W> {
+
+			public RowWrapperProxy(ColumnWrapper<W> columnWrapper) {
+				this.columnWrapper = columnWrapper;
+			}
+
+			private ColumnWrapper<W> columnWrapper;
+
+			@Override
+			public W handle(ResultSet resultSet) throws SQLException {
+				return columnWrapper.handle(resultSet, 1);
+			}
+
+		}
+
 		if (requiredType.equals(Array.class)) {
-			return (RowWrapper<T>) new SQLArrayWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Array>(new SQLArrayWrapper());
 		}
 		if (requiredType.isArray() && !requiredType.equals(byte[].class)) {
 			return (RowWrapper<T>) new ArrayWrapper();
 		}
 		if (requiredType.equals(InputStream.class)) {
-			return (RowWrapper<T>) new ObjectWrapper(); // :~
+			return (RowWrapper<T>) new RowWrapperProxy<Object>(new ObjectWrapper()); // :~
 		}
 		if (requiredType.equals(BigDecimal.class)) {
-			return (RowWrapper<T>) new BigDecimalWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<BigDecimal>(new BigDecimalWrapper());
 		}
 		if (requiredType.equals(Blob.class)) {
-			return (RowWrapper<T>) new BlobWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Blob>(new BlobWrapper());
 		}
 		if (requiredType.equals(Boolean.class) || requiredType.equals(Boolean.TYPE)) {
-			return (RowWrapper<T>) new BooleanWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Boolean>(new BooleanWrapper());
 		}
 		if (requiredType.equals(byte[].class)) {
-			return (RowWrapper<T>) new BytesWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<byte[]>(new BytesWrapper());
 		}
 		if (requiredType.equals(Byte.class) || requiredType.equals(Byte.TYPE)) {
-			return (RowWrapper<T>) new BytesWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Byte>(new ByteWrapper());
 		}
 		if (requiredType.equals(Reader.class)) {
-			return (RowWrapper<T>) new ObjectWrapper(); // :~
+			return (RowWrapper<T>) new RowWrapperProxy<Object>(new ObjectWrapper()); // :~
 		}
 		if (requiredType.equals(Clob.class)) {
-			return (RowWrapper<T>) new ClobWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Clob>(new ClobWrapper());
 		}
 		if (Date.class.isAssignableFrom(requiredType)) {
-			return (RowWrapper<T>) new DateWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<java.sql.Date>(new DateWrapper());
 		}
 		if (requiredType.equals(Double.class) || requiredType.equals(Double.TYPE)) {
-			return (RowWrapper<T>) new DoubleWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Double>(new DoubleWrapper());
 		}
 		if (requiredType.equals(Float.class) || requiredType.equals(Float.TYPE)) {
-			return (RowWrapper<T>) new FloatWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Float>(new FloatWrapper());
 		}
 		if (requiredType.equals(Integer.class) || requiredType.equals(Integer.TYPE)) {
-			return (RowWrapper<T>) new IntegerWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Integer>(new IntegerWrapper());
 		}
 		if (requiredType.equals(Long.class) || requiredType.equals(Long.TYPE)) {
-			return (RowWrapper<T>) new LongWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Long>(new LongWrapper());
 		}
 		if (requiredType.equals(NClob.class)) {
-			return (RowWrapper<T>) new NClobWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<NClob>(new NClobWrapper());
 		}
 		if (Map.class.isAssignableFrom(requiredType)) {
 			return (RowWrapper<T>) new MapWrapper();
 		}
 		if (requiredType.equals(Object.class)) {
-			return (RowWrapper<T>) new ObjectWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Object>(new ObjectWrapper());
 		}
 		if (requiredType.equals(Ref.class)) {
-			return (RowWrapper<T>) new RefWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Ref>(new RefWrapper());
 		}
 		if (requiredType.equals(RowId.class)) {
-			return (RowWrapper<T>) new RowIdWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<RowId>(new RowIdWrapper());
 		}
 		if (requiredType.equals(Short.class) || requiredType.equals(Short.TYPE)) {
-			return (RowWrapper<T>) new ShortWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Short>(new ShortWrapper());
 		}
 		if (requiredType.equals(SQLXML.class)) {
-			return (RowWrapper<T>) new SQLXMLWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<SQLXML>(new SQLXMLWrapper());
 		}
 		if (requiredType.equals(String.class)) {
-			return (RowWrapper<T>) new StringWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<String>(new StringWrapper());
 		}
 		if (requiredType.equals(Timestamp.class)) {
-			return (RowWrapper<T>) new TimestampWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Timestamp>(new TimestampWrapper());
 		}
 		if (requiredType.equals(Time.class)) {
-			return (RowWrapper<T>) new TimeWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<Time>(new TimeWrapper());
 		}
 		if (requiredType.equals(URL.class)) {
-			return (RowWrapper<T>) new URLWrapper();
+			return (RowWrapper<T>) new RowWrapperProxy<URL>(new URLWrapper());
 		}
-		if (requiredType.getPackage().getSpecificationVendor().equals(JDK_SPECIFICATION_VENDOR)) {
-			return (RowWrapper<T>) new ObjectWrapper();
+		if (ObjectUtils.isNotNull(requiredType.getPackage()) && JDK_SPECIFICATION_VENDOR.equals(requiredType.getPackage().getSpecificationVendor())) {
+			return (RowWrapper<T>) new RowWrapperProxy<Object>(new ObjectWrapper());
 		}
 		return (RowWrapper<T>) new BeanWrapper<T>(requiredType);
 	}

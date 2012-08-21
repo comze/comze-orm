@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version CharacterStreamWrapper.java 3.0.0 Jan 12, 2011 5:04:18 PM
+ * @version CharacterStreamWrapper.java 3.2.0 Aug 16, 2012 3:25:25 PM
  */
-public class CharacterStreamWrapper extends ColumnWrapper<Reader> {
+public class CharacterStreamWrapper implements ColumnWrapper<Reader> {
 
 	@Override
-	public Reader handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Reader handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getCharacterStream(index);
 	}
 

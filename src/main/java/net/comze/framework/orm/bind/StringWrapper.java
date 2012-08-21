@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version StringWrapper.java 3.0.0 Jan 11, 2011 11:30:33 AM
+ * @version StringWrapper.java 3.2.0 Aug 16, 2012 3:30:56 PM
  */
-public class StringWrapper extends ColumnWrapper<String> {
+public class StringWrapper implements ColumnWrapper<String> {
 
 	@Override
-	public String handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public String handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getString(index);
 	}
 

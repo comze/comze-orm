@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version ClobWrapper.java 3.0.0 Jan 12, 2011 5:09:11 PM
+ * @version ClobWrapper.java 3.2.0 Aug 16, 2012 3:25:41 PM
  */
-public class ClobWrapper extends ColumnWrapper<Clob> {
+public class ClobWrapper implements ColumnWrapper<Clob> {
 
 	@Override
-	public Clob handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Clob handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getClob(index);
 	}
 

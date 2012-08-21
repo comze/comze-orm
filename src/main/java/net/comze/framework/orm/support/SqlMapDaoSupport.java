@@ -14,19 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.comze.framework.orm.util;
+package net.comze.framework.orm.support;
+
+import javax.sql.DataSource;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
- * @since 1.0.0
- * @version Assert.java 3.1.0 Mar 22, 2012 3:51:53 PM
+ * @since 3.0.0
+ * @version SqlMapDaoSupport.java 3.1.0 Mar 22, 2012 5:06:02 PM
  */
-public abstract class Assert {
-	
-	public static void notNull(Object object, String message) {
-		if (object == null) {
-			throw new IllegalArgumentException(message);
-		}
+public class SqlMapDaoSupport extends DaoSupport {
+
+	private SqlMapTemplate sqlMapTemplate = new SqlMapTemplate();
+
+	public void setSqlMapTemplate(SqlMapTemplate sqlMapTemplate) {
+		this.sqlMapTemplate = sqlMapTemplate;
+	}
+
+	public SqlMapTemplate getSqlMapTemplate() {
+		return this.sqlMapTemplate;
+	}
+
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		this.sqlMapTemplate.setDataSource(dataSource);
+	}
+
+	@Override
+	public DataSource getDataSource() {
+		return this.sqlMapTemplate.getDataSource();
 	}
 
 }

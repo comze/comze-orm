@@ -23,7 +23,7 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version ResultSetUtils.java 3.0.0 Jan 9, 2011 2:36:58 PM
+ * @version ResultSetUtils.java 3.2.0 Aug 15, 2012 5:42:45 PM
  */
 public abstract class ResultSetUtils {
 
@@ -31,7 +31,7 @@ public abstract class ResultSetUtils {
 		try {
 			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 			String columnName = resultSetMetaData.getColumnLabel(index);
-			if(StringUtils.isEmpty(columnName)) {
+			if (StringUtils.isEmpty(columnName)) {
 				columnName = resultSetMetaData.getColumnName(index);
 			}
 			return columnName;

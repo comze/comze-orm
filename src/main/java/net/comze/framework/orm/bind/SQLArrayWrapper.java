@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version SQLArrayWrapper.java 3.0.0 Jan 12, 2011 5:10:04 PM
+ * @version SQLArrayWrapper.java 3.2.0 Aug 16, 2012 3:30:25 PM
  */
-public class SQLArrayWrapper extends ColumnWrapper<Array> {
+public class SQLArrayWrapper implements ColumnWrapper<Array> {
 
 	@Override
-	public Array handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Array handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getArray(index);
 	}
 

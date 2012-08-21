@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version AsciiStreamWrapper.java 3.0.0 Jan 12, 2011 5:00:16 PM
+ * @version BinaryStreamWrapper.java 3.2.0 Aug 16, 2012 3:24:07 PM
  */
-public class BinaryStreamWrapper extends ColumnWrapper<InputStream> {
+public class BinaryStreamWrapper implements ColumnWrapper<InputStream> {
 
 	@Override
-	public InputStream handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public InputStream handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getBinaryStream(index);
 	}
 

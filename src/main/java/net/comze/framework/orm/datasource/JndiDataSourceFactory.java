@@ -21,12 +21,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import net.comze.framework.orm.util.Assert;
+import net.comze.framework.orm.util.ObjectUtils;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 1.0.0
- * @version JndiDataSourceFactory.java 3.1.0 Mar 22, 2012 3:13:28 PM
+ * @version JndiDataSourceFactory.java 3.2.0 Aug 15, 2012 5:13:16 PM
  */
 public class JndiDataSourceFactory implements DataSourceFactory {
 
@@ -43,7 +43,7 @@ public class JndiDataSourceFactory implements DataSourceFactory {
 	}
 
 	protected Object lookup(String jndiName) throws NamingException {
-		Assert.notNull(jndiName, "jndiName");
+		ObjectUtils.notNull(jndiName, "jndiName");
 		String dataSourceName = convertJndiName(jndiName);
 		Context context = new InitialContext();
 		return context.lookup(dataSourceName);

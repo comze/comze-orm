@@ -29,7 +29,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import net.comze.framework.orm.util.Assert;
 import net.comze.framework.orm.util.ObjectUtils;
 import net.comze.framework.orm.util.ResourceLoader;
 
@@ -38,7 +37,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 1.0.0
- * @version DbcpDataSourceFactory.java 3.1.0 Mar 22, 2012 3:36:12 PM
+ * @version DbcpDataSourceFactory.java 3.2.0 Aug 15, 2012 5:12:37 PM
  */
 public class DbcpDataSourceFactory implements DataSourceFactory {
 
@@ -70,7 +69,7 @@ public class DbcpDataSourceFactory implements DataSourceFactory {
 	}
 
 	private BasicDataSource initialize(Properties properties) {
-		Assert.notNull(properties, "properties");
+		ObjectUtils.notNull(properties, "properties");
 		BasicDataSource basicDataSource = null;
 		if (properties.containsKey(JDBC_DRIVER)) {
 			basicDataSource = new BasicDataSource();

@@ -16,20 +16,38 @@
  */
 package net.comze.framework.orm.bind;
 
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
- * @since 3.0.0
- * @version AsciiStreamWrapper.java 3.2.0 Aug 16, 2012 3:21:49 PM
+ * @since 3.2.0
+ * @version CollectionWrapper.java 3.2.0 Aug 16, 2012 3:33:40 PM
  */
-public class AsciiStreamWrapper implements ColumnWrapper<InputStream> {
+public abstract class CollectionWrapper<T> implements ResultSetWrapper<Collection<T>> {
 
-	@Override
-	public InputStream handle(ResultSet resultSet, int index) throws SQLException {
-		return resultSet.getAsciiStream(index);
+	public CollectionWrapper(RowWrapper<T> rowWrapper) {
+		this.rowWrapper = rowWrapper;
+	}
+
+	public CollectionWrapper() {}
+
+	protected RowWrapper<T> rowWrapper;
+
+	public RowWrapper<T> getRowWrapper() {
+		return rowWrapper;
+	}
+
+	public void setRowWrapper(RowWrapper<T> rowWrapper) {
+		this.rowWrapper = rowWrapper;
+	}
+
+	public <C extends Collection<T>> C handle(ResultSet resultSet, C collection) throws SQLException {
+		while (resultSet.next()) {
+			collection.add(getRowWrapper().handle(resultSet));
+		}
+		return collection;
 	}
 
 }

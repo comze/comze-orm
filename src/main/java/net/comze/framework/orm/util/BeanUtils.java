@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BeanUtils.java 3.0.0 Jan 11, 2011 11:22:59 PM
+ * @version BeanUtils.java 3.2.0 Aug 15, 2012 5:11:35 PM
  */
 public abstract class BeanUtils {
 
@@ -72,7 +72,7 @@ public abstract class BeanUtils {
 			throw new BeanAccessException("Get field fail: indicate a security violation to access the '" + classType.getName() + "', field '" + name + "'", e);
 		} catch (NoSuchFieldException e) {
 			if (classType.equals(Object.class)) {
-//				throw new BeanAccessException("Get field fail: signals that the '" + classType.getName() + "' doesn't have a field of '" + name + "'", e);
+				// throw new BeanAccessException("Get field fail: signals that the '" + classType.getName() + "' doesn't have a field of '" + name + "'", e);
 				return (Field) null;
 			} else {
 				return getDeclaredField(classType.getSuperclass(), name);
@@ -127,18 +127,18 @@ public abstract class BeanUtils {
 	}
 
 	public static <T> Map<String, BeanProperty> getBeanPropertyMap(Class<T> requiredType) {
-		Assert.notNull(requiredType, "Get bean property fail: argument '" + Class.class.getName() + ", requiredType' illegal");
+		ObjectUtils.notNull(requiredType, "Get bean property fail: argument '" + Class.class.getName() + ", requiredType' illegal");
 		PropertyDescriptor[] propertyDescriptorArray = getPropertyDescriptorArray(requiredType);
 		Map<String, BeanProperty> beanPropertyMap = new HashMap<String, BeanProperty>(propertyDescriptorArray.length);
-		for (PropertyDescriptor propertyDescriptor : propertyDescriptorArray) {
-			if(ObjectUtils.isNull(propertyDescriptor)) {
-				continue ;
+		for (PropertyDescriptor propertyDescriptor: propertyDescriptorArray) {
+			if (ObjectUtils.isNull(propertyDescriptor)) {
+				continue;
 			}
 			Field field = getDeclaredField(requiredType, propertyDescriptor.getName());
-			if(ObjectUtils.isNull(field)) {
-				continue ;
+			if (ObjectUtils.isNull(field)) {
+				continue;
 			}
-			
+
 			BeanProperty beanProperty = new BeanProperty();
 			beanProperty.setName(propertyDescriptor.getName());
 			beanProperty.setType(propertyDescriptor.getPropertyType());
@@ -148,7 +148,7 @@ public abstract class BeanUtils {
 
 			// handle method annotations
 			Method writeMethod = propertyDescriptor.getWriteMethod();
-			if(ObjectUtils.isNotNull(writeMethod)) {
+			if (ObjectUtils.isNotNull(writeMethod)) {
 				if (StringUtils.isEmpty(beanProperty.getAttribute())) {
 					beanProperty.setAttribute(getAttribute(writeMethod));
 				}
@@ -157,9 +157,9 @@ public abstract class BeanUtils {
 				}
 				beanProperty.setWriteMethod(writeMethod);
 			}
-			
+
 			Method readMethod = propertyDescriptor.getReadMethod();
-			if(ObjectUtils.isNotNull(readMethod)) {
+			if (ObjectUtils.isNotNull(readMethod)) {
 				if (StringUtils.isEmpty(beanProperty.getAttribute())) {
 					beanProperty.setAttribute(getAttribute(readMethod));
 				}

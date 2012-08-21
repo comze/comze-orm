@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version LongWrapper.java 3.0.0 Jan 12, 2011 4:50:48 PM
+ * @version LongWrapper.java 3.2.0 Aug 16, 2012 3:28:18 PM
  */
-public class LongWrapper extends ColumnWrapper<Long> {
+public class LongWrapper implements ColumnWrapper<Long> {
 
 	@Override
-	public Long handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Long handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getLong(index);
 	}
 

@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version FloatWrapper.java 3.0.0 Jan 12, 2011 4:51:43 PM
+ * @version FloatWrapper.java 3.2.0 Aug 16, 2012 3:27:32 PM
  */
-public class FloatWrapper extends ColumnWrapper<Float> {
+public class FloatWrapper implements ColumnWrapper<Float> {
 
 	@Override
-	public Float handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Float handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getFloat(index);
 	}
 

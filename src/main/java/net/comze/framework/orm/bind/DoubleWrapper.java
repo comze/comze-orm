@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version DoubleWrapper.java 3.0.0 Jan 12, 2011 4:52:37 PM
+ * @version DoubleWrapper.java 3.2.0 Aug 16, 2012 3:26:14 PM
  */
-public class DoubleWrapper extends ColumnWrapper<Double> {
+public class DoubleWrapper implements ColumnWrapper<Double> {
 
 	@Override
-	public Double handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Double handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getDouble(index);
 	}
 

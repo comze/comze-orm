@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version NClobWrapper.java 3.0.0 Jan 12, 2011 5:18:57 PM
+ * @version NClobWrapper.java 3.2.0 Aug 16, 2012 3:28:50 PM
  */
-public class NClobWrapper extends ColumnWrapper<NClob> {
+public class NClobWrapper implements ColumnWrapper<NClob> {
 
 	@Override
-	public NClob handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public NClob handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getNClob(index);
 	}
 

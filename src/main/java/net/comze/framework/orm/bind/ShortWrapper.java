@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version ShortWrapper.java 3.0.0 Jan 12, 2011 4:49:51 PM
+ * @version ShortWrapper.java 3.2.0 Aug 16, 2012 3:30:16 PM
  */
-public class ShortWrapper extends ColumnWrapper<Short> {
+public class ShortWrapper implements ColumnWrapper<Short> {
 
 	@Override
-	public Short handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Short handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getShort(index);
 	}
 

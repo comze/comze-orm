@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BooleanWrapper.java 3.0.0 Jan 11, 2011 11:41:57 AM
+ * @version BooleanWrapper.java 3.2.0 Aug 16, 2012 3:24:37 PM
  */
-public class BooleanWrapper extends ColumnWrapper<Boolean> {
+public class BooleanWrapper implements ColumnWrapper<Boolean> {
 
 	@Override
-	public Boolean handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Boolean handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getBoolean(index);
 	}
 

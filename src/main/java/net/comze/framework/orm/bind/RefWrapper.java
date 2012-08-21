@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version RefWrapper.java 3.0.0 Jan 12, 2011 5:06:48 PM
+ * @version RefWrapper.java 3.2.0 Aug 16, 2012 3:29:30 PM
  */
-public class RefWrapper extends ColumnWrapper<Ref> {
+public class RefWrapper implements ColumnWrapper<Ref> {
 
 	@Override
-	public Ref handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Ref handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getRef(index);
 	}
 

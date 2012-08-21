@@ -24,13 +24,8 @@ import java.sql.SQLException;
  * @since 3.0.0
  * @version ResultSetWrapper.java 3.0.0 Jan 9, 2011 12:40:42 PM
  */
-public abstract class RowWrapper<T> implements ResultSetWrapper<T> {
-
-	@Override
-	public T handle(ResultSet resultSet) throws SQLException {
-		return resultSet.next() ? handleRow(resultSet) : (T) null;
-	}
+public interface RowWrapper<T> {
 	
-	public abstract T handleRow(ResultSet resultSet) throws SQLException;
+	public T handle(ResultSet resultSet) throws SQLException;
 	
 }

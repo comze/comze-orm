@@ -22,21 +22,10 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version ColumnWrapper.java 3.0.0 Jan 9, 2011 6:36:58 PM
+ * @version ColumnWrapper.java 3.2.0 Aug 16, 2012 3:22:00 PM
  */
-public abstract class ColumnWrapper<T> extends RowWrapper<T> {
+public interface ColumnWrapper<T> {
 
-	protected static final int DEFAULT_COLUMN_INDEX = 1;
-
-	@Override
-	public T handleRow(ResultSet resultSet) throws SQLException {
-		int columnCount = resultSet.getMetaData().getColumnCount();
-		if (columnCount != 1) {
-			throw new SQLException("Incorrect column: column count is " + columnCount + ", where column count expected 1, in statement " + resultSet.getStatement().toString());
-		}
-		return handleColumn(resultSet, DEFAULT_COLUMN_INDEX);
-	}
-
-	public abstract T handleColumn(ResultSet resultSet, int index) throws SQLException;
+	public T handle(ResultSet resultSet, int index) throws SQLException;
 
 }

@@ -26,12 +26,12 @@ import net.comze.framework.orm.util.ResultSetUtils;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version MapWrapper.java 3.0.0 Jan 9, 2011 3:23:03 PM
+ * @version MapWrapper.java 3.2.0 Aug 16, 2012 3:22:40 PM
  */
-public class MapWrapper extends RowWrapper<Map<String, Object>> {
+public class MapWrapper implements RowWrapper<Map<String, Object>> {
 
 	@Override
-	public Map<String, Object> handleRow(ResultSet resultSet) throws SQLException {
+	public Map<String, Object> handle(ResultSet resultSet) throws SQLException {
 		int columnCount = resultSet.getMetaData().getColumnCount();
 		Map<String, Object> resultRow = new LinkedHashMap<String, Object>(columnCount);
 		for (int i = 1; i <= columnCount; i++) {

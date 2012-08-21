@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version ArrayWrapper.java 3.0.0 Jan 9, 2011 2:56:07 PM
+ * @version ArrayWrapper.java 3.2.0 Aug 16, 2012 3:22:17 PM
  */
-public class ArrayWrapper extends RowWrapper<Object[]> {
+public class ArrayWrapper implements RowWrapper<Object[]> {
 
 	@Override
-	public Object[] handleRow(ResultSet resultSet) throws SQLException {
+	public Object[] handle(ResultSet resultSet) throws SQLException {
 		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 		int columnCount = resultSetMetaData.getColumnCount();
 		Object[] resultRow = new Object[columnCount];

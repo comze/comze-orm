@@ -25,21 +25,15 @@ import java.util.ArrayList;
  * @since 3.0.0
  * @version ListWrapper.java 3.0.0 Jan 9, 2011 1:05:53 PM
  */
-public class ListWrapper<T> extends IteratorWrapper<T> {
+public class ListWrapper<T> extends CollectionWrapper<T> {
 
 	public ListWrapper(RowWrapper<T> rowWrapper) {
 		super(rowWrapper);
 	}
 
-	public ListWrapper() {}
-
 	@Override
 	public ArrayList<T> handle(ResultSet resultSet) throws SQLException {
-		ArrayList<T> arrayList = new ArrayList<T>(resultSet.getRow());
-		while (resultSet.next()) {
-			arrayList.add(getRowWrapper().handleRow(resultSet));
-		}
-		return arrayList;
+		return handle(resultSet, new ArrayList<T>(resultSet.getRow()));
 	}
 
 }

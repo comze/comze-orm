@@ -23,7 +23,9 @@ import java.sql.SQLException;
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
  * @version IteratorWrapper.java 3.0.0 Jan 9, 2011 12:54:17 PM
+ * @deprecated
  */
+@Deprecated
 public abstract class IteratorWrapper<T> implements ResultSetWrapper<Iterable<T>> {
 
 	private RowWrapper<T> rowWrapper;

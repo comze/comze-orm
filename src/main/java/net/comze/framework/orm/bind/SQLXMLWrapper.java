@@ -23,12 +23,12 @@ import java.sql.SQLXML;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version SQLXMLWrapper.java 3.0.0 Jan 12, 2011 5:20:02 PM
+ * @version SQLXMLWrapper.java 3.2.0 Aug 16, 2012 3:30:41 PM
  */
-public class SQLXMLWrapper extends ColumnWrapper<SQLXML> {
+public class SQLXMLWrapper implements ColumnWrapper<SQLXML> {
 
 	@Override
-	public SQLXML handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public SQLXML handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getSQLXML(index);
 	}
 

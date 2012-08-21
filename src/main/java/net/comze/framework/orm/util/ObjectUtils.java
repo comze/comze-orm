@@ -23,6 +23,12 @@ package net.comze.framework.orm.util;
  */
 public abstract class ObjectUtils {
 
+	public static void notNull(Object object, String message) {
+		if (object == null) {
+			throw new IllegalArgumentException(message);
+		}
+	}
+
 	public static boolean isNotNull(Object object) {
 		return object != null;
 	}

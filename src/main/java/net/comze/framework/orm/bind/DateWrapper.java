@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version DateWrapper.java 3.0.0 Jan 12, 2011 4:57:23 PM
+ * @version DateWrapper.java 3.2.0 Aug 16, 2012 3:26:04 PM
  */
-public class DateWrapper extends ColumnWrapper<Date> {
+public class DateWrapper implements ColumnWrapper<Date> {
 
 	@Override
-	public Date handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Date handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getDate(index);
 	}
 

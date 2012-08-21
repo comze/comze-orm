@@ -23,12 +23,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BigDecimalWrapper.java 3.0.0 Jan 12, 2011 4:54:13 PM
+ * @version BigDecimalWrapper.java 3.2.0 Aug 16, 2012 3:23:28 PM
  */
-public class BigDecimalWrapper extends ColumnWrapper<BigDecimal> {
+public class BigDecimalWrapper implements ColumnWrapper<BigDecimal> {
 
 	@Override
-	public BigDecimal handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public BigDecimal handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getBigDecimal(index);
 	}
 

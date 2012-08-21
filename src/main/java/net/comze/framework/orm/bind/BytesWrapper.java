@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BytesWrapper.java 3.0.0 Jan 12, 2011 4:55:31 PM
+ * @version BytesWrapper.java 3.2.0 Aug 16, 2012 3:24:53 PM
  */
-public class BytesWrapper extends ColumnWrapper<byte[]> {
+public class BytesWrapper implements ColumnWrapper<byte[]> {
 
 	@Override
-	public byte[] handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public byte[] handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getBytes(index);
 	}
 

@@ -22,12 +22,12 @@ import java.sql.SQLException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version IntegerWrapper.java 3.0.0 Jan 12, 2011 1:43:08 PM
+ * @version IntegerWrapper.java 3.2.0 Aug 16, 2012 3:27:50 PM
  */
-public class IntegerWrapper extends ColumnWrapper<Integer> {
+public class IntegerWrapper implements ColumnWrapper<Integer> {
 
 	@Override
-	public Integer handleColumn(ResultSet resultSet, int index) throws SQLException {
+	public Integer handle(ResultSet resultSet, int index) throws SQLException {
 		return resultSet.getInt(index);
 	}
 
