@@ -34,7 +34,7 @@ import net.comze.framework.orm.util.StringUtils;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BeanWrapper.java 3.0.0 Jan 9, 2011 9:03:38 PM
+ * @version BeanWrapper.java 3.2.1 Sep 21, 2012 12:02:24 PM
  */
 public class BeanWrapper<T> implements RowWrapper<T> {
 
@@ -79,12 +79,13 @@ public class BeanWrapper<T> implements RowWrapper<T> {
 
 	protected void setObject(Object object, Method writeMethod, PropertyEditor propertyEditor, Object value) throws SQLException {
 		if (ObjectUtils.isNotNull(propertyEditor)) {
-			if (value instanceof String && BeanUtils.containsDeclaredMethod(propertyEditor.getClass(), "setAsText", String.class)) {
+			if (value instanceof String) {
 				propertyEditor.setAsText((String) value);
+				value = propertyEditor.getAsText();
 			} else {
 				propertyEditor.setValue(value);
+				value = propertyEditor.getValue();
 			}
-			value = propertyEditor.getValue();
 		}
 		BeanUtils.invoke(object, writeMethod, value);
 	}
