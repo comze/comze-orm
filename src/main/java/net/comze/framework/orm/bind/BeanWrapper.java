@@ -34,7 +34,7 @@ import net.comze.framework.orm.util.StringUtils;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BeanWrapper.java 3.2.1 Sep 21, 2012 12:02:24 PM
+ * @version BeanWrapper.java 3.2.3 Sep 21, 2012 1:36:16 PM
  */
 public class BeanWrapper<T> implements RowWrapper<T> {
 
@@ -81,11 +81,10 @@ public class BeanWrapper<T> implements RowWrapper<T> {
 		if (ObjectUtils.isNotNull(propertyEditor)) {
 			if (value instanceof String) {
 				propertyEditor.setAsText((String) value);
-				value = propertyEditor.getAsText();
 			} else {
 				propertyEditor.setValue(value);
-				value = propertyEditor.getValue();
 			}
+			value = propertyEditor.getValue();
 		}
 		BeanUtils.invoke(object, writeMethod, value);
 	}
