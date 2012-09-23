@@ -62,7 +62,7 @@ import net.comze.framework.orm.util.RowWrapperFactory;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.2.0
- * @version SqlMapTemplate.java 3.2.0 Aug 15, 2012 5:31:41 PM
+ * @version SqlMapTemplate.java 3.2.2 Sep 23, 2012 4:28:08 PM
  */
 public class SqlMapTemplate extends DaoSupport implements Template {
 
@@ -125,7 +125,8 @@ public class SqlMapTemplate extends DaoSupport implements Template {
 		}
 	}
 
-	protected <T> T queryForObject(Connection connection, String sql, final RowWrapper<T> rowWrapper, Object... params) throws DataAccessException {
+	@Override
+	public <T> T queryForObject(Connection connection, String sql, final RowWrapper<T> rowWrapper, Object... params) throws DataAccessException {
 		return execute(connection, sql, new ResultSetHandler<T>() {
 
 			@Override
@@ -140,7 +141,8 @@ public class SqlMapTemplate extends DaoSupport implements Template {
 		}, params);
 	}
 
-	protected <T> T queryForObject(String sql, final RowWrapper<T> rowWrapper, Object... params) throws DataAccessException {
+	@Override
+	public <T> T queryForObject(String sql, final RowWrapper<T> rowWrapper, Object... params) throws DataAccessException {
 		Connection connection = null;
 		try {
 			connection = getConnection(getDataSource());
@@ -150,7 +152,8 @@ public class SqlMapTemplate extends DaoSupport implements Template {
 		}
 	}
 
-	protected <T> T queryForObject(Connection connection, String sql, final ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException {
+	@Override
+	public <T> T queryForObject(Connection connection, String sql, final ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException {
 		return execute(connection, sql, new ResultSetHandler<T>() {
 
 			@Override
@@ -172,7 +175,8 @@ public class SqlMapTemplate extends DaoSupport implements Template {
 		}, params);
 	}
 
-	protected <T> T queryForObject(String sql, final ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException {
+	@Override
+	public <T> T queryForObject(String sql, final ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException {
 		Connection connection = null;
 		try {
 			connection = getConnection(getDataSource());

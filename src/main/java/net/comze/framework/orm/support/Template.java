@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import net.comze.framework.orm.bind.ColumnWrapper;
 import net.comze.framework.orm.bind.ResultSetWrapper;
 import net.comze.framework.orm.bind.RowWrapper;
 import net.comze.framework.orm.util.DataAccessException;
@@ -35,13 +36,21 @@ import net.comze.framework.orm.util.DataAccessException;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version Template.java 3.2.0 Aug 15, 2012 5:16:06 PM
+ * @version Template.java 3.2.2 Sep 23, 2012 4:27:53 PM
  */
 public interface Template {
 
 	public <T> T queryForObject(Connection connection, String sql, ResultSetWrapper<T> resultSetWrapper, Object... params) throws DataAccessException;
 
 	public <T> T queryForObject(String sql, ResultSetWrapper<T> resultSetWrapper, Object... params) throws DataAccessException;
+
+	public <T> T queryForObject(Connection connection, String sql, RowWrapper<T> rowWrapper, Object... params) throws DataAccessException;
+
+	public <T> T queryForObject(String sql, RowWrapper<T> rowWrapper, Object... params) throws DataAccessException;
+
+	public <T> T queryForObject(Connection connection, String sql, ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException;
+
+	public <T> T queryForObject(String sql, ColumnWrapper<T> columnWrapper, Object... params) throws DataAccessException;
 
 	public <T> List<T> queryForList(Connection connection, String sql, RowWrapper<T> rowWrapper, Object... params) throws DataAccessException;
 
