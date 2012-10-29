@@ -24,7 +24,7 @@ import java.sql.Connection;
  * @version TransactionFactory.java 3.1.0 Mar 27, 2012 4:13:28 PM
  */
 public interface TransactionFactory {
-	
+
 	public Transaction create(Connection connection, boolean autoCommit);
 
 }

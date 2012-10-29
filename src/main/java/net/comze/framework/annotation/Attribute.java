@@ -27,9 +27,9 @@ import java.lang.annotation.Target;
  * @version Attribute.java 3.0.0 Jan 10, 2011 12:51:49 PM
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 public @interface Attribute {
-    
-    public String name();
+
+	public String name();
 
 }

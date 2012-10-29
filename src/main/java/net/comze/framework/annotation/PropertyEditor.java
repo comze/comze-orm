@@ -27,9 +27,9 @@ import java.lang.annotation.Target;
  * @version PropertyEditor.java 3.0.0 Jan 9, 2011 11:20:31 PM
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
+@Target({ ElementType.FIELD, ElementType.METHOD })
 public @interface PropertyEditor {
-    
-    public String className();
+
+	public String className();
 
 }

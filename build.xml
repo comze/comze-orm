@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="comze-orm" default="build" basedir=".">
 
-	<property name="build.version" value="3.2.4" />
+	<property name="build.version" value="3.2.5" />
 
 	<property name="src.dir" value="src/main/java" />
 	<property name="lib.dir" value="lib" />
@@ -20,7 +20,7 @@
 	</target>
 
 	<target name="compile" depends="init">
-		<javac debug="on" debuglevel="lines,vars,source" srcdir="${src.dir}" destdir="${build.dir}" encoding="UTF-8" nowarn="true" source="1.6" target="1.6">
+		<javac debug="on" debuglevel="lines,vars,source" srcdir="${src.dir}" destdir="${build.dir}" encoding="UTF-8" nowarn="true" source="1.6" target="1.6" includeantruntime="false">
 			<classpath refid="classpath" />
 		</javac>
 

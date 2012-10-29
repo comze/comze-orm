@@ -60,7 +60,7 @@ import net.comze.framework.orm.bind.URLWrapper;
  * @version ColumnWrapperFactory.java 3.1.0 Mar 26, 2012 5:45:15 PM
  */
 public abstract class ColumnWrapperFactory {
-	
+
 	@SuppressWarnings("unchecked")
 	public static <T> ColumnWrapper<T> wrapper(Class<T> requiredType) {
 		if (requiredType.equals(Array.class)) {

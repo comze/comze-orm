@@ -25,7 +25,7 @@ import java.sql.SQLException;
  * @version ResultSetWrapper.java 3.0.0 Jan 9, 2011 12:40:42 PM
  */
 public interface RowWrapper<T> {
-	
+
 	public T handle(ResultSet resultSet) throws SQLException;
-	
+
 }

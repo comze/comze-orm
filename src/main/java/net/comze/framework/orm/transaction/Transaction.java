@@ -26,13 +26,13 @@ import net.comze.framework.orm.util.TransactionException;
  * @version Transaction.java 3.1.0 Mar 27, 2012 4:07:26 PM
  */
 public interface Transaction {
-	
+
 	public Connection open() throws TransactionException;
-	
+
 	public void commit() throws TransactionException;
-	
+
 	public void rollback() throws TransactionException;
-	
+
 	public void close() throws TransactionException;
 
 }
