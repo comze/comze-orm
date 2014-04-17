@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 1.0.0
- * @version JdbcResource.java 3.1.0 Mar 22, 2012 3:31:10 PM
+ * @version JdbcResource.java 3.2.6 Apr 16, 2014 5:51:36 PM
  */
 public class JdbcResource {
 
@@ -33,14 +33,6 @@ public class JdbcResource {
 	public static final String JDBC_USERNAME = "jdbc.username";
 
 	public static final String JDBC_PASSWORD = "jdbc.password";
-
-	public static final String POOL_MAX_ACTIVE = "pool.maxactive";
-
-	public static final String POOL_MAX_IDLE = "pool.maxidle";
-
-	public static final String POOL_MAX_WAIT = "pool.maxwait";
-
-	public static final String POOL_VALIDATION_QUERY = "pool.validationQuery";
 
 	private Map<String, Object> attributeMap = new HashMap<String, Object>();
 

@@ -23,8 +23,8 @@
  * ${tags}
  *
  * @author &lt;a href="mailto:gkzhong@gmail.com"&gt;GK.ZHONG&lt;/a&gt;
- * @since 3.2.4
- * @version ${file_name} 3.2.5 ${date} ${time}
+ * @since 3.2.6
+ * @version ${file_name} 3.2.6 ${date} ${time}
  */</template><template autoinsert="true" context="fieldcomment_context" deleted="false" description="Comment for fields" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.fieldcomment" name="fieldcomment">/**
  * 
  */</template><template autoinsert="true" context="methodcomment_context" deleted="false" description="Comment for non-overriding methods" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.methodcomment" name="methodcomment">/**
