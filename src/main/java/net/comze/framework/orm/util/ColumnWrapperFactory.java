@@ -23,17 +23,18 @@ import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.Date;
 import java.sql.NClob;
 import java.sql.Ref;
 import java.sql.RowId;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 
 import net.comze.framework.orm.bind.BigDecimalWrapper;
 import net.comze.framework.orm.bind.BlobWrapper;
 import net.comze.framework.orm.bind.BooleanWrapper;
+import net.comze.framework.orm.bind.ByteWrapper;
 import net.comze.framework.orm.bind.BytesWrapper;
 import net.comze.framework.orm.bind.ClobWrapper;
 import net.comze.framework.orm.bind.ColumnWrapper;
@@ -47,6 +48,7 @@ import net.comze.framework.orm.bind.ObjectWrapper;
 import net.comze.framework.orm.bind.RefWrapper;
 import net.comze.framework.orm.bind.RowIdWrapper;
 import net.comze.framework.orm.bind.SQLArrayWrapper;
+import net.comze.framework.orm.bind.SQLDateWrapper;
 import net.comze.framework.orm.bind.SQLXMLWrapper;
 import net.comze.framework.orm.bind.ShortWrapper;
 import net.comze.framework.orm.bind.StringWrapper;
@@ -57,7 +59,7 @@ import net.comze.framework.orm.bind.URLWrapper;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.1.0
- * @version ColumnWrapperFactory.java 3.1.0 Mar 26, 2012 5:45:15 PM
+ * @version ColumnWrapperFactory.java 3.2.7 Jun 14, 2014 11:30:47 AM
  */
 public abstract class ColumnWrapperFactory {
 
@@ -82,7 +84,7 @@ public abstract class ColumnWrapperFactory {
 			return (ColumnWrapper<T>) new BytesWrapper();
 		}
 		if (requiredType.equals(Byte.class) || requiredType.equals(Byte.TYPE)) {
-			return (ColumnWrapper<T>) new BytesWrapper();
+			return (ColumnWrapper<T>) new ByteWrapper();
 		}
 		if (requiredType.equals(Reader.class)) {
 			return (ColumnWrapper<T>) new ObjectWrapper(); // :~
@@ -90,8 +92,8 @@ public abstract class ColumnWrapperFactory {
 		if (requiredType.equals(Clob.class)) {
 			return (ColumnWrapper<T>) new ClobWrapper();
 		}
-		if (Date.class.isAssignableFrom(requiredType)) {
-			return (ColumnWrapper<T>) new DateWrapper();
+		if (requiredType.equals(Date.class)) {
+			return (ColumnWrapper<T>) new SQLDateWrapper();
 		}
 		if (requiredType.equals(Double.class) || requiredType.equals(Double.TYPE)) {
 			return (ColumnWrapper<T>) new DoubleWrapper();
@@ -107,6 +109,9 @@ public abstract class ColumnWrapperFactory {
 		}
 		if (requiredType.equals(NClob.class)) {
 			return (ColumnWrapper<T>) new NClobWrapper();
+		}
+		if (requiredType.equals(Number.class)) {
+			return (ColumnWrapper<T>) new DoubleWrapper();
 		}
 		if (requiredType.equals(Object.class)) {
 			return (ColumnWrapper<T>) new ObjectWrapper();
@@ -134,6 +139,9 @@ public abstract class ColumnWrapperFactory {
 		}
 		if (requiredType.equals(URL.class)) {
 			return (ColumnWrapper<T>) new URLWrapper();
+		}
+		if (java.util.Date.class.isAssignableFrom(requiredType)) {
+			return (ColumnWrapper<T>) new DateWrapper();
 		}
 		return (ColumnWrapper<T>) new ObjectWrapper();
 	}

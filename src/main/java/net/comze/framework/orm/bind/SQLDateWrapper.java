@@ -16,27 +16,20 @@
  */
 package net.comze.framework.orm.bind;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
- * @since 3.0.0
- * @version DateWrapper.java 3.2.7 Jun 13, 2014 11:33:38 PM
+ * @since 3.2.7
+ * @version SQLDateWrapper.java 3.2.7 Jun 14, 2014 7:34:13 PM
  */
-public class DateWrapper implements ColumnWrapper<Date> {
+public class SQLDateWrapper implements ColumnWrapper<Date> {
 
 	@Override
 	public Date handle(ResultSet resultSet, int index) throws SQLException {
-		Object value = resultSet.getObject(index);
-		if (value instanceof Date) {
-			return new Date(((Date) value).getTime());
-		}
-		if (value instanceof Long) {
-			return new Date((Long) value);
-		}
-		throw new SQLException("Could not convert '" + value + "' of type '" + value.getClass().getName() + "' to class '" + Date.class.getName() + "'");
+		return resultSet.getDate(index);
 	}
 
 }
