@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="comze-orm" default="build" basedir=".">
 
-	<property name="build.version" value="3.2.6" />
+	<property name="build.version" value="3.2.6.RE1" />
 
 	<property name="src.dir" value="src/main/java" />
 	<property name="lib.dir" value="lib" />
