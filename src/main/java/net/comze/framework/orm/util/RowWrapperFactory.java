@@ -31,7 +31,6 @@ import java.sql.SQLException;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Map;
 
 import net.comze.framework.orm.bind.ArrayWrapper;
@@ -43,7 +42,6 @@ import net.comze.framework.orm.bind.ByteWrapper;
 import net.comze.framework.orm.bind.BytesWrapper;
 import net.comze.framework.orm.bind.ClobWrapper;
 import net.comze.framework.orm.bind.ColumnWrapper;
-import net.comze.framework.orm.bind.DateWrapper;
 import net.comze.framework.orm.bind.DoubleWrapper;
 import net.comze.framework.orm.bind.FloatWrapper;
 import net.comze.framework.orm.bind.IntegerWrapper;
@@ -65,7 +63,7 @@ import net.comze.framework.orm.bind.URLWrapper;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version RowWrapperFactory.java 3.2.0 Aug 17, 2012 11:47:09 AM
+ * @version RowWrapperFactory.java 3.2.5.RE1 Jun 14, 2014 10:14:02 PM
  */
 public abstract class RowWrapperFactory {
 
@@ -117,9 +115,6 @@ public abstract class RowWrapperFactory {
 		}
 		if (requiredType.equals(Clob.class)) {
 			return (RowWrapper<T>) new RowWrapperProxy<Clob>(new ClobWrapper());
-		}
-		if (Date.class.isAssignableFrom(requiredType)) {
-			return (RowWrapper<T>) new RowWrapperProxy<java.sql.Date>(new DateWrapper());
 		}
 		if (requiredType.equals(Double.class) || requiredType.equals(Double.TYPE)) {
 			return (RowWrapper<T>) new RowWrapperProxy<Double>(new DoubleWrapper());
