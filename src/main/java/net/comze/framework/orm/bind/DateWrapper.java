@@ -20,16 +20,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import net.comze.framework.orm.util.ObjectUtils;
+
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version DateWrapper.java 3.2.7 Jun 13, 2014 11:33:38 PM
+ * @version DateWrapper.java 3.2.8 Feb 2, 2015 5:41:59 PM
  */
 public class DateWrapper implements ColumnWrapper<Date> {
 
 	@Override
 	public Date handle(ResultSet resultSet, int index) throws SQLException {
 		Object value = resultSet.getObject(index);
+		if (ObjectUtils.isNull(value)) {
+			return (Date) value;
+		}
 		if (value instanceof Date) {
 			return new Date(((Date) value).getTime());
 		}
