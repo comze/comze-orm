@@ -45,6 +45,7 @@ import net.comze.framework.orm.bind.ClobWrapper;
 import net.comze.framework.orm.bind.ColumnWrapper;
 import net.comze.framework.orm.bind.DateWrapper;
 import net.comze.framework.orm.bind.DoubleWrapper;
+import net.comze.framework.orm.bind.EnumWrapper;
 import net.comze.framework.orm.bind.FloatWrapper;
 import net.comze.framework.orm.bind.IntegerWrapper;
 import net.comze.framework.orm.bind.ListWrapper;
@@ -467,6 +468,16 @@ public class SqlMapTemplate extends DaoSupport implements Template {
 	@Override
 	public Reader queryForCharacterStream(String sql, Object... params) throws DataAccessException {
 		return queryForObject(sql, new CharacterStreamWrapper(), params);
+	}
+
+	@Override
+	public <T extends Enum<T>> T queryForEnum(Connection connection, String sql, Class<T> requiredType, Object... params) {
+		return queryForObject(connection, sql, new EnumWrapper<T>(requiredType), params);
+	}
+
+	@Override
+	public <T extends Enum<T>> T queryForEnum(String sql, Class<T> requiredType, Object... params) {
+		return queryForObject(sql, new EnumWrapper<T>(requiredType), params);
 	}
 
 	@Override
