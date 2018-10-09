@@ -79,11 +79,7 @@ public class BeanWrapper<T> implements RowWrapper<T> {
 
 	protected void setObject(Object object, Method writeMethod, PropertyEditor propertyEditor, Object value) throws SQLException {
 		if (ObjectUtils.isNotNull(propertyEditor)) {
-			if (value instanceof String) {
-				propertyEditor.setAsText((String) value);
-			} else {
-				propertyEditor.setValue(value);
-			}
+			propertyEditor.setValue(value);
 			value = propertyEditor.getValue();
 		}
 		BeanUtils.invoke(object, writeMethod, value);

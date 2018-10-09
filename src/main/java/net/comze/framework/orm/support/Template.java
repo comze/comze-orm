@@ -160,6 +160,10 @@ public interface Template {
 
 	public Reader queryForCharacterStream(String sql, Object... params) throws DataAccessException;
 
+	public <T extends Enum<T>> T queryForEnum(Connection connection, String sql, Class<T> requiredType, Object... params);
+
+	public <T extends Enum<T>> T queryForEnum(String sql, Class<T> requiredType, Object... params);
+
 	public int execute(Connection connection, String sql, Object... params) throws DataAccessException;
 
 	public int execute(String sql, Object... params) throws DataAccessException;

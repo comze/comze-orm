@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.comze</groupId>
 	<artifactId>comze-orm</artifactId>
-	<version>3.3.0</version>
+	<version>3.3.1</version>
 	<name>comze-orm</name>
 	<description>Comze ORM Framework</description>
 	<url>https://github.com/comze/comze-orm</url>
