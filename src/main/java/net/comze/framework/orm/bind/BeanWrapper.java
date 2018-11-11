@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.List;
 
 import net.comze.framework.orm.util.BeanAccessException;
 import net.comze.framework.orm.util.BeanProperty;
@@ -34,7 +34,7 @@ import net.comze.framework.orm.util.StringUtils;
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BeanWrapper.java 3.2.3 Sep 21, 2012 1:36:16 PM
+ * @version BeanWrapper.java 3.2.9 Apr 29, 2016 3:26:56 PM
  */
 public class BeanWrapper<T> implements RowWrapper<T> {
 
@@ -46,7 +46,8 @@ public class BeanWrapper<T> implements RowWrapper<T> {
 
 	@Override
 	public T handle(ResultSet resultSet) throws SQLException {
-		Map<String, BeanProperty> beanPropertyMap = BeanUtils.getBeanPropertyMap(requiredType);
+		List<BeanProperty> beanProperties = BeanUtils.getBeanProperties(requiredType);
+
 		T resultRow = BeanUtils.newInstance(requiredType);
 		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 		int columnCount = resultSetMetaData.getColumnCount();
@@ -56,7 +57,7 @@ public class BeanWrapper<T> implements RowWrapper<T> {
 			if (StringUtils.isEmpty(columnName)) {
 				throw new SQLException("Get column name fail: the column name is empty in statement '" + resultSet.getStatement().toString() + "'");
 			}
-			BeanProperty beanProperty = beanPropertyMap.get(columnName);
+			BeanProperty beanProperty = BeanUtils.getBeanProperty(beanProperties, columnName);
 			if (ObjectUtils.isNull(beanProperty)) {
 				continue;
 			}

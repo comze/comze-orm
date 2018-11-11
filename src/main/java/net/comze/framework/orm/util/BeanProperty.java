@@ -41,6 +41,12 @@ public class BeanProperty implements Serializable {
 
 	private Method writeMethod;
 
+	private Boolean awareness;
+
+	private Boolean caseSensitive;
+
+	private Boolean lowerCaseWithUnderscores;
+
 	public PropertyEditor getPropertyEditor() {
 		return propertyEditor;
 	}
@@ -87,6 +93,30 @@ public class BeanProperty implements Serializable {
 
 	public void setWriteMethod(Method writeMethod) {
 		this.writeMethod = writeMethod;
+	}
+
+	public Boolean getAwareness() {
+		return awareness;
+	}
+
+	public void setAwareness(Boolean awareness) {
+		this.awareness = awareness;
+	}
+
+	public Boolean getCaseSensitive() {
+		return caseSensitive;
+	}
+
+	public void setCaseSensitive(Boolean caseSensitive) {
+		this.caseSensitive = caseSensitive;
+	}
+
+	public Boolean getLowerCaseWithUnderscores() {
+		return lowerCaseWithUnderscores;
+	}
+
+	public void setLowerCaseWithUnderscores(Boolean lowerCaseWithUnderscores) {
+		this.lowerCaseWithUnderscores = lowerCaseWithUnderscores;
 	}
 
 }

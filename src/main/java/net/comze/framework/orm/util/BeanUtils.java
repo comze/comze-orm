@@ -24,18 +24,22 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+
+import net.comze.framework.annotation.Awareness;
+import net.comze.framework.annotation.CaseSensitive;
+import net.comze.framework.annotation.LowerCaseWithUnderscores;
 
 /**
  * @author <a href="mailto:gkzhong@gmail.com">GK.ZHONG</a>
  * @since 3.0.0
- * @version BeanUtils.java 3.2.0 Aug 15, 2012 5:11:35 PM
+ * @version BeanUtils.java 3.2.9 Apr 29, 2016 3:24:13 PM
  */
 public abstract class BeanUtils {
 
-	public static Object invoke(Object object, Method method, Object... args) {
+	public static Object invoke(Object object, Method method, Object ...args) {
 		try {
 			return method.invoke(object, args);
 		} catch (IllegalArgumentException e) {
@@ -80,7 +84,7 @@ public abstract class BeanUtils {
 		}
 	}
 
-	public static <T> Method getDeclaredMethod(Class<T> classType, String name, Class<?>... parameterTypes) {
+	public static <T> Method getDeclaredMethod(Class<T> classType, String name, Class<?> ...parameterTypes) {
 		try {
 			return classType.getDeclaredMethod(name, parameterTypes);
 		} catch (SecurityException e) {
@@ -90,7 +94,7 @@ public abstract class BeanUtils {
 		}
 	}
 
-	public static <T> boolean containsDeclaredMethod(Class<T> classType, String name, Class<?>... parameterTypes) {
+	public static <T> boolean containsDeclaredMethod(Class<T> classType, String name, Class<?> ...parameterTypes) {
 		try {
 			return ObjectUtils.isNotNull(getDeclaredMethod(classType, name, parameterTypes));
 		} catch (Exception e) {
@@ -126,10 +130,95 @@ public abstract class BeanUtils {
 		return (String) null;
 	}
 
-	public static <T> Map<String, BeanProperty> getBeanPropertyMap(Class<T> requiredType) {
+	public static Boolean getAwareness(AnnotatedElement annotatedElement) {
+		if (ObjectUtils.isNotNull(annotatedElement)) {
+			Awareness awarenessAnnotation = annotatedElement.getAnnotation(Awareness.class);
+			if (ObjectUtils.isNotNull(awarenessAnnotation)) {
+				return awarenessAnnotation.value();
+			}
+		}
+		return (Boolean) null;
+	}
+
+	public static Boolean getCaseSensitive(AnnotatedElement annotatedElement) {
+		if (ObjectUtils.isNotNull(annotatedElement)) {
+			CaseSensitive caseSensitiveAnnotation = annotatedElement.getAnnotation(CaseSensitive.class);
+			if (ObjectUtils.isNotNull(caseSensitiveAnnotation)) {
+				return caseSensitiveAnnotation.value();
+			}
+		}
+		return (Boolean) null;
+	}
+
+	public static Boolean getLowerCaseWithUnderscores(AnnotatedElement annotatedElement) {
+		if (ObjectUtils.isNotNull(annotatedElement)) {
+			LowerCaseWithUnderscores lowerCaseWithUnderscoresAnnotation = annotatedElement.getAnnotation(LowerCaseWithUnderscores.class);
+			if (ObjectUtils.isNotNull(lowerCaseWithUnderscoresAnnotation)) {
+				return lowerCaseWithUnderscoresAnnotation.value();
+			}
+		}
+		return (Boolean) null;
+	}
+
+	protected static void setPropertyAnnotations(BeanProperty beanProperty, AnnotatedElement annotatedElement) {
+		if (ObjectUtils.isNull(beanProperty.getPropertyEditor())) {
+			beanProperty.setPropertyEditor(getPropertyEditor(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getAttribute())) {
+			beanProperty.setAttribute(getAttribute(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getAwareness())) {
+			beanProperty.setAwareness(getAwareness(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getCaseSensitive())) {
+			beanProperty.setCaseSensitive(getCaseSensitive(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getLowerCaseWithUnderscores())) {
+			beanProperty.setLowerCaseWithUnderscores(getLowerCaseWithUnderscores(annotatedElement));
+		}
+	}
+
+	protected static void setClassAnnotations(BeanProperty beanProperty, AnnotatedElement annotatedElement) {
+		if (ObjectUtils.isNull(beanProperty.getAwareness())) {
+			beanProperty.setAwareness(getAwareness(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getCaseSensitive())) {
+			beanProperty.setCaseSensitive(getCaseSensitive(annotatedElement));
+		}
+		if (ObjectUtils.isNull(beanProperty.getLowerCaseWithUnderscores())) {
+			beanProperty.setLowerCaseWithUnderscores(getLowerCaseWithUnderscores(annotatedElement));
+		}
+	}
+
+	public static BeanProperty getBeanProperty(List<BeanProperty> beanProperties, String columnName) {
+		for (BeanProperty beanProperty: beanProperties) {
+			if (NamingStrategy.STRICT_NAMING_STRATEGY.matches(beanProperty.getAttribute(), columnName)) {
+				return beanProperty;
+			}
+
+			boolean awareness = ObjectUtils.isNotNull(beanProperty.getAwareness()) && beanProperty.getAwareness();
+			boolean lowerCaseWithUnderscores = (ObjectUtils.isNotNull(beanProperty.getLowerCaseWithUnderscores()) && beanProperty.getLowerCaseWithUnderscores()) || (awareness && ObjectUtils.isNull(beanProperty.getLowerCaseWithUnderscores()));
+			boolean caseInSensitive = (ObjectUtils.isNotNull(beanProperty.getCaseSensitive()) && !beanProperty.getCaseSensitive()) || (awareness && ObjectUtils.isNull(beanProperty.getCaseSensitive()));
+
+			String propertyName = beanProperty.getAttribute();
+
+			if (lowerCaseWithUnderscores && NamingStrategy.LOWER_CASE_WITH_UNDERSCORES_NAMING_STRATEGY.matches(propertyName, columnName)) {
+				return beanProperty;
+			}
+
+			if (caseInSensitive && NamingStrategy.CASE_INSENSITIVE_NAMING_STRATEGY.matches(propertyName, columnName)) {
+				return beanProperty;
+			}
+
+		}
+		return null;
+	}
+
+	public static <T> List<BeanProperty> getBeanProperties(Class<T> requiredType) {
 		ObjectUtils.notNull(requiredType, "Get bean property fail: argument '" + Class.class.getName() + ", requiredType' illegal");
 		PropertyDescriptor[] propertyDescriptorArray = getPropertyDescriptorArray(requiredType);
-		Map<String, BeanProperty> beanPropertyMap = new HashMap<String, BeanProperty>(propertyDescriptorArray.length);
+
+		List<BeanProperty> beanProperties = new ArrayList<BeanProperty>(propertyDescriptorArray.length);
 		for (PropertyDescriptor propertyDescriptor: propertyDescriptorArray) {
 			if (ObjectUtils.isNull(propertyDescriptor)) {
 				continue;
@@ -142,40 +231,28 @@ public abstract class BeanUtils {
 			BeanProperty beanProperty = new BeanProperty();
 			beanProperty.setName(propertyDescriptor.getName());
 			beanProperty.setType(propertyDescriptor.getPropertyType());
-			beanProperty.setAttribute(getAttribute(field));
-			beanProperty.setPropertyEditor(getPropertyEditor(field));
-			// :~
+			setPropertyAnnotations(beanProperty, field);
 
 			// handle method annotations
 			Method writeMethod = propertyDescriptor.getWriteMethod();
-			if (ObjectUtils.isNotNull(writeMethod)) {
-				if (StringUtils.isEmpty(beanProperty.getAttribute())) {
-					beanProperty.setAttribute(getAttribute(writeMethod));
-				}
-				if (ObjectUtils.isNull(beanProperty.getPropertyEditor())) {
-					beanProperty.setPropertyEditor(getPropertyEditor(writeMethod));
-				}
-				beanProperty.setWriteMethod(writeMethod);
-			}
+			beanProperty.setWriteMethod(writeMethod);
+			setPropertyAnnotations(beanProperty, writeMethod);
 
 			Method readMethod = propertyDescriptor.getReadMethod();
-			if (ObjectUtils.isNotNull(readMethod)) {
-				if (StringUtils.isEmpty(beanProperty.getAttribute())) {
-					beanProperty.setAttribute(getAttribute(readMethod));
-				}
-				if (ObjectUtils.isNull(beanProperty.getPropertyEditor())) {
-					beanProperty.setPropertyEditor(getPropertyEditor(readMethod));
-				}
-				beanProperty.setReadMethod(readMethod);
-			}
+			beanProperty.setReadMethod(readMethod);
+			setPropertyAnnotations(beanProperty, readMethod);
 			// :~
+
+			setClassAnnotations(beanProperty, requiredType);
 
 			if (StringUtils.isEmpty(beanProperty.getAttribute())) {
 				beanProperty.setAttribute(propertyDescriptor.getName());
 			}
-			beanPropertyMap.put(beanProperty.getAttribute(), beanProperty);
+
+			beanProperties.add(beanProperty);
 		}
-		return beanPropertyMap;
+
+		return beanProperties;
 	}
 
 }

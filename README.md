@@ -5,7 +5,7 @@
 <dependency>
     <groupId>net.comze</groupId>
     <artifactId>comze-orm</artifactId>
-    <version>3.3.1</version>
+    <version>3.3.2</version>
 </dependency>
 ```
 
@@ -105,6 +105,72 @@ public class JsonAddressEditor extends PropertyEditorSupport {
 	public Object getValue() {
 		return new Gson().fromJson(getAsText(), Address.class);
 	}
+
+}
+```
+
+Use `@LowerCaseWithUnderscores` annotation
+
+```
+@LowerCaseWithUnderscores
+public class SampleEntity {
+
+	// ...
+
+}
+```
+
+```
+public class SampleEntity {
+
+	private String firstName;
+
+	@LowerCaseWithUnderscores
+	private String lastName;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@LowerCaseWithUnderscores
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	// ...
+
+}
+```
+
+Use `@CaseSensitive(false)` annotation
+
+```
+@CaseSensitive(false)
+public class SampleEntity {
+
+	// ...
+
+}
+```
+
+```
+public class SampleEntity {
+
+	private String firstName;
+
+	@CaseSensitive(false)
+	private String lastName;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	@CaseSensitive(false)
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	// ...
 
 }
 ```
